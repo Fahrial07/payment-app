@@ -11,6 +11,10 @@ use App\Http\Controllers\Controller;
 class DepositController extends Controller
 {
 
+    function base64_decode($data) {
+      return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
+    }
+
     private function rules() {
         return [
             'account_number' => 'required',
@@ -18,7 +22,31 @@ class DepositController extends Controller
         ];
     }
 
+    
+
     public function deposit(Request $request) {
+
+        //Base64 Token
+        // QWxpIEZhaHJpYWwgQW53YXI=
+        //Ali Fahrial Anwar
+        $token = $request->bearerToken();
+
+        if(empty($token)) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Unauthorized',
+            ]);
+        }
+
+        $decodeToken = $this->base64_decode($token);
+
+        if($decodeToken != 'Ali Fahrial Anwar') {
+            return response()->json([
+                'status' =>  400,
+                'message' => 'Invalid Credentials',
+            ]);
+        }
+
         $request->validate($this->rules());
 
         $accountNumber = $request->account_number;
@@ -51,10 +79,10 @@ class DepositController extends Controller
             'user_id' => $wallet->user_id,
             'wallet_id' => $wallet->id,
             'order_id' => Str::uuid(),
-            'amount' => $newBalance
+            'amount' => $amount
         ]);
 
-        $data = Deposit::where('id', $deposit->id)->pluck('order_id', 'amount', 'status', 'created_at');
+        $data = Deposit::where('id', $deposit->id)->first();
 
         return response()->json([
             'status' => 200,

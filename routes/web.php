@@ -42,9 +42,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
-    Route::post('/deposit', [DepositController::class, 'deposit'])->name('deposit');
-});
+;
 
 
 require __DIR__.'/auth.php';

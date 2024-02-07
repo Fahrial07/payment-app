@@ -19,3 +19,7 @@ use App\Http\Controllers\Api\DepositController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::post('/deposit', [DepositController::class, 'deposit']);
+
