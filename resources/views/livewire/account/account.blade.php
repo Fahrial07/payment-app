@@ -31,7 +31,7 @@
                         <tr>
                             <td width="150px">Balance</td>
                             <td width="10px">:</td>
-                            <td><b>{{ $wallet->balance }}</b></td>
+                            <td><b>Rp. {{ number_format($wallet->balance, 2) }}</b></td>
                         </tr>
                     </table>
 

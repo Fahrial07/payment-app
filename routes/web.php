@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountController;
-use App\Http\Controllers\DepositController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WithdrawalController;
+use App\Http\Controllers\Api\DepositController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +39,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('deposit', DepositController::class);
     Route::resource('withdrawal', WithdrawalController::class);
 
+});
+
+
+Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
+    Route::post('/deposit', [DepositController::class, 'deposit'])->name('deposit');
 });
 
 
