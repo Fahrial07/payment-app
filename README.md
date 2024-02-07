@@ -1,5 +1,6 @@
 ## API DOC POSTMAN
 - **[API DOC](https://documenter.getpostman.com/view/16904284/2s9Yyy8ygc)**
+- https://documenter.getpostman.com/view/16904284/2s9Yyy8ygc
 
 ## RUN
 php artisan config:clear,
